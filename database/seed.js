@@ -1,4 +1,5 @@
-import pkg from "@prisma/client";
+import pkg from "../backend/node_modules/@prisma/client/index.js";
+import bcrypt from "bcryptjs";
 
 const { PrismaClient } = pkg;
 
@@ -223,6 +224,12 @@ const seedDatabase = async () => {
     // USERS
     // ======================================
 
+    const hashedAdminPassword =
+      await bcrypt.hash("admin123", 12);
+
+    const hashedDelegatePassword =
+      await bcrypt.hash("delegate123", 12);
+
     await prisma.user.createMany({
       data: [
         {
@@ -233,7 +240,7 @@ const seedDatabase = async () => {
             "admin@enigmamun.com",
 
           password:
-            "admin123",
+            hashedAdminPassword,
 
           university:
             "SRMU",
@@ -252,7 +259,7 @@ const seedDatabase = async () => {
             "delegate@enigmamun.com",
 
           password:
-            "delegate123",
+            hashedDelegatePassword,
 
           university:
             "Delhi University",

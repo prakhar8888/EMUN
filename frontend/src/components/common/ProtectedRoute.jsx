@@ -1,173 +1,85 @@
 "use client";
 
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { Loader2 } from "lucide-react";
-
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProtectedRoute({
   children,
+  allowedRoles = [],
   adminOnly = false,
+  requiredPermission = null,
 }) {
-
-  // ======================================
-  // AUTH CONTEXT
-  // ======================================
-
-  const {
-    user,
-    loading,
-    isAuthenticated,
-  } = useAuth();
-
-
-  // ======================================
-  // ROUTER
-  // ======================================
+  const { user, loading, isAuthenticated } = useAuth();
 
   const router = useRouter();
+  const [isAuthorizing, setIsAuthorizing] = useState(true);
 
+  const effectiveRoles = adminOnly
+    ? ["ADMIN", "SECRETARIAT"]
+    : allowedRoles;
 
-  // ======================================
-  // ACCESS CONTROL
-  // ======================================
+  const userRole = user?.role?.toUpperCase();
+  const hasRequiredRole =
+    effectiveRoles.length === 0 || effectiveRoles.includes(userRole);
+
+  const isStaffRole = userRole === "ADMIN" || userRole === "SECRETARIAT";
+  const hasActiveStaffStatus =
+    !isStaffRole || user?.staffStatus === "ACTIVE";
+
+  const hasRequiredPermission =
+    !requiredPermission ||
+    userRole === "ADMIN" ||
+    user?.[requiredPermission] === true;
+
+  const isFullyAuthorized =
+    hasRequiredRole && hasActiveStaffStatus && hasRequiredPermission;
 
   useEffect(() => {
-
-    // WAIT FOR AUTH TO LOAD
     if (loading) return;
 
-    // USER NOT LOGGED IN
-    if (!isAuthenticated) {
+    const authorizationCheck = setTimeout(() => {
+      if (!isAuthenticated) {
+        // Anaadi's page acts as the general, primary entry point for
+        // anyone reaching a protected page without a session. If a
+        // Secretariat member lands here by mistake, that page itself
+        // detects their role and redirects them to the staff portal.
+        router.replace("/enigma-secretariat-portal");
+      } else if (!isFullyAuthorized) {
+        router.replace("/admin");
+      } else {
+        setIsAuthorizing(false);
+      }
+    }, 50);
 
-      router.push("/login");
+    return () => clearTimeout(authorizationCheck);
+  }, [loading, isAuthenticated, isFullyAuthorized, router]);
 
-      return;
-    }
-
-    // ADMIN ONLY CHECK
-    if (
-      adminOnly &&
-      user?.role !== "ADMIN"
-    ) {
-
-      router.push("/");
-
-      return;
-    }
-
-  }, [
-    loading,
-    isAuthenticated,
-    user,
-    adminOnly,
-    router,
-  ]);
-
-
-  // ======================================
-  // LOADING SCREEN
-  // ======================================
-
-  if (loading) {
-
+  if (loading || isAuthorizing) {
     return (
-      <div className="
-        min-h-screen
-        flex
-        items-center
-        justify-center
-        px-6
-      ">
-
-        <div className="
-          flex
-          flex-col
-          items-center
-          gap-6
-          text-center
-        ">
-
-          {/* Spinner */}
-
-          <div className="
-            relative
-            flex
-            items-center
-            justify-center
-          ">
-
-            <div className="
-              absolute
-              w-20
-              h-20
-              rounded-full
-              bg-cyan-500/20
-              blur-2xl
-            " />
-
-            <Loader2 className="
-              relative
-              z-10
-              w-12
-              h-12
-              animate-spin
-              text-cyan-400
-            " />
-
+      <div className="min-h-screen flex items-center justify-center px-6">
+        <div className="flex flex-col items-center gap-6 text-center">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute w-20 h-20 rounded-full bg-[#C9A227]/15 blur-2xl" />
+            <Loader2 className="relative z-10 w-12 h-12 animate-spin text-[#C9A227]" />
           </div>
-
-
-          {/* Text */}
-
           <div>
-
-            <h2 className="
-              text-2xl
-              font-bold
-              text-white
-              mb-2
-            ">
+            <h2 className="text-2xl font-bold text-[#F5F2E8] mb-2">
               Verifying Access
             </h2>
-
-            <p className="
-              text-slate-400
-              max-w-md
-            ">
-              Establishing secure diplomatic
-              authentication session...
+            <p className="text-[#7D8793] max-w-md">
+              Establishing secure diplomatic authentication session...
             </p>
-
           </div>
         </div>
       </div>
     );
   }
 
-
-  // ======================================
-  // BLOCK RENDER
-  // ======================================
-
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !isFullyAuthorized) {
     return null;
   }
 
-  if (
-    adminOnly &&
-    user?.role !== "ADMIN"
-  ) {
-    return null;
-  }
-
-
-  // ======================================
-  // ALLOW ACCESS
-  // ======================================
-
-  return children;
+  return <>{children}</>;
 }

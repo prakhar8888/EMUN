@@ -9,66 +9,132 @@ export const getFoundationData =
           id: 1,
 
           name:
-            "Aarav Mehta",
+            "Anaadi Shukla",
 
           title:
             "Secretary General",
 
           bio:
-            "A visionary leader dedicated to building globally aware student communities through diplomacy, debate, and international collaboration.",
+            "Leading the Secretariat with a vision for elevating Enigma MUN into a premier platform for diplomacy, leadership, and global collaboration.",
 
           specialty:
             "Global Diplomacy",
 
           contact:
-            "aarav@munsphere.org",
+            "anaadi@enigmamun.org",
 
           image:
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+            "/anaadi.jpeg",
         },
 
         {
           id: 2,
 
           name:
-            "Sophia Williams",
+            "Addhyan Yadav",
 
           title:
-            "Director General",
+            "Under Secretary General – Delegate Affairs",
 
           bio:
-            "Focused on operational excellence, strategic planning, and delivering world-class MUN experiences for delegates worldwide.",
+            "Overseeing delegate experience, registrations, and engagement to ensure every participant feels supported throughout their Enigma MUN journey.",
 
           specialty:
-            "Strategic Leadership",
+            "Delegate Experience",
 
           contact:
-            "sophia@munsphere.org",
+            "addhyan@enigmamun.org",
 
           image:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+            "/Addhyan.jpeg",
         },
 
         {
           id: 3,
 
           name:
-            "Daniel Kim",
+            "Ridhika Koti",
 
           title:
-            "Head of International Relations",
+            "Under Secretary General – Academics",
 
           bio:
-            "Passionate about youth engagement, geopolitical dialogue, and fostering cross-cultural understanding through academic diplomacy.",
+            "Responsible for the academic rigor of committee background guides and ensuring authentic, well-researched procedural standards.",
 
           specialty:
-            "International Relations",
+            "Academic Affairs",
 
           contact:
-            "daniel@munsphere.org",
+            "ridhika@enigmamun.org",
 
           image:
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+            "/G.ridhika.png",
+        },
+
+        {
+          id: 4,
+
+          name:
+            "Prakhar Gupta",
+
+          title:
+            "Technical Secretary",
+
+          bio:
+            "Building and maintaining the digital infrastructure that powers Enigma MUN, from registration systems to live conference operations.",
+
+          specialty:
+            "Technical Operations",
+
+          contact:
+            "prakhar@enigmamun.org",
+
+          image:
+            "/Prakhar.jpeg",
+        },
+
+        {
+          id: 5,
+
+          name:
+            "Samvart Madhukar",
+
+          title:
+            "Under Secretary General – Academics",
+
+          bio:
+            "Supporting the Academics team in shaping agendas and committee structures that challenge and inspire every delegate.",
+
+          specialty:
+            "Academic Affairs",
+
+          contact:
+            "samvart@enigmamun.org",
+
+          image:
+            "/Samvart.jpeg",
+        },
+
+        {
+          id: 6,
+
+          name:
+            "Vansh Sen",
+
+          title:
+            "Under Secretary General – Operations",
+
+          bio:
+            "Coordinating the logistics and on-ground operations that bring every Enigma MUN conference to life, seamlessly and on schedule.",
+
+          specialty:
+            "Operations & Logistics",
+
+          contact:
+            "vansh@enigmamun.org",
+
+          image:
+            "/Vansh.jpeg",
         },
       ];
 

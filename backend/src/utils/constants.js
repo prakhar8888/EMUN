@@ -1,4 +1,4 @@
-export const APP_NAME = "MUNSphere";
+export const APP_NAME = "Enigma MUN";
 
 export const MAX_FILE_SIZE =
   10 * 1024 * 1024; // 10MB
@@ -12,13 +12,13 @@ export const ALLOWED_FILE_TYPES = [
 
 export const CLOUDINARY_FOLDERS = {
   CHAMBER_PDFS:
-    "mun/chambers/background-guides",
+    "enigmamun/chambers/background-guides",
 
   EVENT_IMAGES:
-    "mun/events",
+    "enigmamun/events",
 
   GENERAL_UPLOADS:
-    "mun/general",
+    "enigmamun/general",
 };
 
 export const API_MESSAGES = {

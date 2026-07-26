@@ -9,7 +9,7 @@ export default function SectionTitle({
   subtitle,
   alignment = "center",
   className = "",
-  badge = "MUNSphere Summit",
+  badge = "Enigma MUN Summit",
 }) {
   /* =========================
      ALIGNMENT CLASSES
@@ -17,10 +17,8 @@ export default function SectionTitle({
   const containerAlignment =
     alignment === "center"
       ? "items-center text-center"
-
       : alignment === "right"
       ? "items-end text-right"
-
       : "items-start text-left";
 
   return (
@@ -63,7 +61,7 @@ export default function SectionTitle({
           py-2
           rounded-full
           border
-          border-white/10
+          border-[#2A2A2A]
           mb-8
         "
       >
@@ -71,14 +69,14 @@ export default function SectionTitle({
         <Sparkles className="
           w-4
           h-4
-          text-violet-400
+          text-[#C9A227]
         " />
 
         <span className="
           text-sm
           tracking-[0.18em]
           uppercase
-          text-slate-300
+          text-[#C8CDD5]
         ">
           {badge}
         </span>
@@ -146,8 +144,8 @@ export default function SectionTitle({
           h-[4px]
           rounded-full
           bg-gradient-to-r
-          from-violet-500
-          to-cyan-400
+          from-[#C9A227]
+          to-[#D4AF37]
           mb-8
         "
       />
@@ -176,7 +174,7 @@ export default function SectionTitle({
           className={`
             text-lg
             md:text-2xl
-            text-slate-300
+            text-[#C8CDD5]
             leading-relaxed
             max-w-3xl
             ${

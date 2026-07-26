@@ -1,229 +1,137 @@
 ﻿"use client";
 
 import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-
-import {
   apiRequest,
   API_ENDPOINTS,
 } from "../lib/api";
 
-import {
-  loginUser,
-  signupUser,
-} from "../services/authService";
-
-const AuthContext =
-  createContext();
-
-
 // ======================================
-// AUTH PROVIDER
+// LOGIN USER
 // ======================================
 
-export const AuthProvider = ({
-  children,
+export const loginUser = async ({
+  email,
+  password,
 }) => {
-
-  // ======================================
-  // STATES
-  // ======================================
-
-  const [user, setUser] =
-    useState(null);
-
-  const [loading, setLoading] =
-    useState(true);
-
-
-  // ======================================
-  // LOAD CURRENT USER
-  // ======================================
-
-  useEffect(() => {
-
-    const loadUser =
-      async () => {
-
-        try {
-
-          const token =
-            localStorage.getItem(
-              "token"
-            );
-
-          // NO TOKEN
-          if (!token) {
-
-            setLoading(false);
-
-            return;
-          }
-
-          // FETCH CURRENT USER
-          const data =
-            await apiRequest(
-              `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1"}/auth/me`,
-              {
-                token,
-              }
-            );
-
-          setUser(data.user);
-
-        } catch (error) {
-
-          console.error(
-            "Load User Error:",
-            error
-          );
-
-          localStorage.removeItem(
-            "token"
-          );
-
-          setUser(null);
-
-        } finally {
-
-          setLoading(false);
-        }
-      };
-
-    loadUser();
-
-  }, []);
-
-
-  // ======================================
-  // LOGIN
-  // ======================================
-
-  const login = async (
-    email,
-    password
-  ) => {
-
-    try {
-
-      const data =
-        await loginUser({
+  try {
+    const response = await apiRequest(
+      API_ENDPOINTS.AUTH.LOGIN,
+      {
+        method: "POST",
+        body: {
           email,
           password,
-        });
-
-      // STORE TOKEN
-      localStorage.setItem(
-        "token",
-        data.token
-      );
-
-      // UPDATE USER
-      setUser(data.user);
-
-      return {
-        success: true,
-      };
-
-    } catch (error) {
-
-      return {
-        success: false,
-
-        message:
-          error.message ||
-          "Login failed",
-      };
-    }
-  };
-
-
-  // ======================================
-  // SIGNUP
-  // ======================================
-
-  const signup = async (
-    formData
-  ) => {
-
-    try {
-
-      const data =
-        await signupUser(
-          formData
-        );
-
-      // STORE TOKEN
-      localStorage.setItem(
-        "token",
-        data.token
-      );
-
-      // UPDATE USER
-      setUser(data.user);
-
-      return {
-        success: true,
-      };
-
-    } catch (error) {
-
-      return {
-        success: false,
-
-        message:
-          error.message ||
-          "Signup failed",
-      };
-    }
-  };
-
-
-  // ======================================
-  // LOGOUT
-  // ======================================
-
-  const logout = () => {
-
-    localStorage.removeItem(
-      "token"
+        },
+      }
     );
 
-    setUser(null);
-  };
+    return response;
+  } catch (error) {
+    console.error(
+      "[AuthService] Login Error:",
+      error?.message
+    );
 
+    throw new Error(
+      error?.message ||
+      "Login failed"
+    );
+  }
+};
 
-  return (
-    <AuthContext.Provider
-      value={{
+// ======================================
+// SIGNUP USER
+// ======================================
 
-        user,
-        setUser,
+export const signupUser = async (
+  formData
+) => {
+  try {
+    const response = await apiRequest(
+      API_ENDPOINTS.AUTH.SIGNUP,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
-        loading,
+    return response;
+  } catch (error) {
+    console.error(
+      "[AuthService] Signup Error:",
+      error?.message
+    );
 
-        login,
-        signup,
-        logout,
+    throw new Error(
+      error?.message ||
+      "Signup failed"
+    );
+  }
+};
 
-        isAuthenticated:
-          !!user,
+// ======================================
+// GET CURRENT USER
+// ======================================
 
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+export const getCurrentUser = async (
+  token
+) => {
+  try {
+    const response = await apiRequest(
+      API_ENDPOINTS.AUTH.ME,
+      {
+        method: "GET",
+        token,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error(
+      "[AuthService] Get User Error:",
+      error?.message
+    );
+
+    throw new Error(
+      error?.message ||
+      "Failed to load user"
+    );
+  }
+};
+
+// ======================================
+// TOKEN HELPERS
+// ======================================
+
+export const getToken = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return localStorage.getItem(
+    "token"
   );
 };
 
+export const setToken = (
+  token
+) => {
+  if (typeof window === "undefined") {
+    return;
+  }
 
-// ======================================
-// USE AUTH
-// ======================================
+  localStorage.setItem(
+    "token",
+    token
+  );
+};
 
-export const useAuth = () =>
-  useContext(AuthContext);
+export const removeToken = () => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  localStorage.removeItem(
+    "token"
+  );
+};

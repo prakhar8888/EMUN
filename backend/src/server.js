@@ -65,7 +65,6 @@ const API_PREFIX = "/api/v1";
 // SECURITY CONFIG
 // ======================================
 
-// Hide Express technology header
 app.disable("x-powered-by");
 
 
@@ -156,7 +155,7 @@ app.get("/", (req, res) => {
     success: true,
 
     message:
-      "MUNSphere API Running Successfully 🚀",
+      "Enigma MUN API Running Successfully 🚀",
   });
 });
 
@@ -237,7 +236,7 @@ app.use(errorMiddleware);
 app.listen(PORT, () => {
   console.log(`
 ========================================
-🚀 MUNSphere Backend Running
+🚀 Enigma MUN Backend Running
 🌐 PORT: ${PORT}
 🛡️ ENV: ${process.env.NODE_ENV}
 ========================================

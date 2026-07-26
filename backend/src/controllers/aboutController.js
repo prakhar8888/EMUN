@@ -4,9 +4,9 @@ export const getAboutData = async (req, res) => {
       success: true,
       message: "About data fetched successfully",
       data: {
-        title: "About MUNSphere",
+        title: "About Enigma MUN",
         description:
-          "MUNSphere is a modern Model United Nations platform focused on diplomacy, leadership, collaboration, and global discussions.",
+          "Enigma MUN is a modern Model United Nations platform focused on diplomacy, leadership, collaboration, and global discussions.",
       },
     });
   } catch (error) {

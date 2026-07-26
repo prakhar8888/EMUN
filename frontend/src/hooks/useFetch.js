@@ -69,10 +69,14 @@ export default function useFetch(
         /* =========================
            AUTH TOKEN SUPPORT
         ========================= */
+        // Matches the key name used everywhere else in the app
+        // (AuthContext, apiRequest, all admin pages) - this was
+        // previously "munsphere_token", a leftover key name that
+        // nothing in the real login flow ever wrote to.
         const token =
           typeof window !== "undefined"
             ? localStorage.getItem(
-                "munsphere_token"
+                "token"
               )
             : null;
 

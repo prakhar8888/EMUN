@@ -8,31 +8,52 @@ import {
   deleteChamber,
 } from "../controllers/chambersController.js";
 
+import {
+  protect,
+  authorizeRoles,
+  requirePermission,
+} from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 // ======================================
-// CREATE CHAMBER
+// PUBLIC ROUTES
 // ======================================
-router.post("/", createChamber);
 
-// ======================================
 // GET ALL CHAMBERS
-// ======================================
 router.get("/", getAllChambers);
 
-// ======================================
 // GET SINGLE CHAMBER
-// ======================================
 router.get("/:slug", getSingleChamber);
 
 // ======================================
-// UPDATE CHAMBER
+// ADMIN ROUTES
 // ======================================
-router.put("/:id", updateChamber);
 
-// ======================================
+// CREATE CHAMBER
+router.post(
+  "/",
+  protect,
+  authorizeRoles("ADMIN", "SECRETARIAT"),
+  requirePermission("canManageCommittees"),
+  createChamber
+);
+
+// UPDATE CHAMBER
+router.put(
+  "/:id",
+  protect,
+  authorizeRoles("ADMIN", "SECRETARIAT"),
+  requirePermission("canManageCommittees"),
+  updateChamber
+);
+
 // DELETE CHAMBER
-// ======================================
-router.delete("/:id", deleteChamber);
+router.delete(
+  "/:id",
+  protect,
+  authorizeRoles("ADMIN"),
+  deleteChamber
+);
 
 export default router;

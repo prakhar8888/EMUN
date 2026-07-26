@@ -1,499 +1,182 @@
 "use client";
 
 import { motion } from "framer-motion";
-
 import {
   Award,
-  BookOpen,
-  Globe,
   Mail,
-  ExternalLink,
+  Phone,
+  Quote,
 } from "lucide-react";
 
+import AnimatedBackground from "@/components/common/AnimatedBackground";
+
+const secretariat = [
+  {
+    id: 1,
+    name: "Anaadi Shukla",
+    title: "General Secretary",
+    shortTitle: "GS",
+    bio: "Leading the Secretariat with a vision for elevating Enigma MUN into a premier platform for diplomacy, leadership, and global collaboration.",
+    image: "/anaadi.jpeg",
+    email: "anaadi.enigmamun@gmail.com",
+    phone: "+91 96969 04321",
+  },
+  {
+    id: 2,
+    name: "Addhyan Yadav",
+    title: "Under Secretary General of Delegate Affairs",
+    shortTitle: "USG Delegate Affairs",
+    bio: "Overseeing delegate experience, registrations, and engagement to ensure every participant feels supported throughout their Enigma MUN journey.",
+    image: "/Addhyan.jpeg",
+    email: "addhyan.enigmamun@gmail.com",
+    phone: "+91 75228 01221",
+  },
+  {
+    id: 3,
+    name: "G.Ridhika Koti",
+    title: "Under Secretary General of Public Relations",
+    shortTitle: "USG Public Relations",
+    bio: "Shaping how the world discovers Enigma MUN, from brand identity to outreach that brings new delegates into every conference.",
+    image: "/G.ridhika.png",
+    email: "ridhikagkoti.enigmamun@gmail.com",
+    phone: "+91 93801 97667",
+  },
+  {
+    id: 4,
+    name: "Samvart Madhukar",
+    title: "Under Secretary General for Academics",
+    shortTitle: "USG Academics",
+    bio: "Supporting the Academics team in shaping agendas and committee structures that challenge and inspire every delegate.",
+    image: "/Samvart.jpeg",
+    email: "samvart.enigmamun@gmail.com",
+    phone: "+91 93353 31464",
+  },
+  {
+    id: 5,
+    name: "Prakhar Gupta",
+    title: "Technical Secretary",
+    shortTitle: "Technical SG",
+    bio: "Building and maintaining the digital infrastructure that powers Enigma MUN, from registration systems to live conference operations.",
+    image: "/Prakhar.jpeg",
+    email: "prakhar.enigmamun@gmail.com",
+    phone: "+91 87077 48399",
+  },
+  {
+    id: 6,
+    name: "Vansh Sen",
+    title: "Under Secretary General for Operations",
+    shortTitle: "USG Operations",
+    bio: "Coordinating the logistics and on-ground operations that bring every Enigma MUN conference to life, seamlessly and on schedule.",
+    image: "/Vansh.jpeg",
+    email: "vansh.enigmamun@gmail.com",
+    phone: "+91 73079 98590",
+  },
+];
+
 export default function FoundationPage() {
-  const founders = [
-    {
-      id: "f1",
-      name: "Eleanor Sterling",
-      title: "Secretary-General & Founder",
-      bio:
-        "Former UN Youth Ambassador with extensive experience in international relations and diplomatic crisis management. Eleanor established MUNSphere to bridge academic diplomacy with real-world geopolitical thinking.",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      contact: "secgen@munsphere.org",
-      specialty: "Global Security & Disarmament",
-    },
-
-    {
-      id: "f2",
-      name: "Arthur Pendelton",
-      title: "Director of Academics",
-      bio:
-        "A distinguished scholar of International Law. Arthur oversees the academic rigor of all committee background guides and ensures authentic parliamentary procedure simulations.",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      contact: "academics@munsphere.org",
-      specialty: "International Human Rights Law",
-    },
-
-    {
-      id: "f3",
-      name: "Julian Vance",
-      title: "Director of Delegate Affairs",
-      bio:
-        "Julian focuses on delegate training, accessibility, and premium conference experiences through strategic organizational planning and diplomatic engagement systems.",
-      image:
-        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      contact: "delegates@munsphere.org",
-      specialty: "Economic & Social Development",
-    },
-  ];
-
   return (
-    <div className="relative min-h-screen overflow-hidden pt-28 pb-24 px-6">
+    <div className="relative min-h-screen overflow-hidden pt-28 pb-32 px-6">
 
-      {/* =========================
-          BACKGROUND EFFECTS
-      ========================== */}
-      <div className="absolute inset-0 z-0">
+      <AnimatedBackground />
 
-        <div className="
-          blur-circle
-          blur-purple
-          w-[450px]
-          h-[450px]
-          top-[-120px]
-          left-[-120px]
-        " />
-
-        <div className="
-          blur-circle
-          blur-cyan
-          w-[400px]
-          h-[400px]
-          bottom-[-120px]
-          right-[-120px]
-        " />
-
-        <div className="
-          absolute
-          inset-0
-          grid-background
-          opacity-[0.03]
-        " />
-      </div>
-
-      {/* =========================
-          PAGE HEADER
-      ========================== */}
-      <div className="
-        relative
-        z-10
-        max-w-6xl
-        mx-auto
-        text-center
-        mb-24
-      ">
-
+      <div className="relative z-10 max-w-6xl mx-auto text-center mb-24">
         <motion.div
-          initial={{
-            opacity: 0,
-            scale: 0.8,
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-          }}
-          transition={{
-            duration: 0.8,
-          }}
-          className="
-            inline-flex
-            items-center
-            gap-3
-            glass
-            px-6
-            py-4
-            rounded-full
-            border
-            border-white/10
-            mb-10
-          "
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="inline-flex items-center gap-3 glass px-6 py-4 rounded-full mb-10"
         >
-          <Award className="
-            w-6
-            h-6
-            text-cyan-400
-          " />
-
-          <span className="
-            text-sm
-            uppercase
-            tracking-[0.2em]
-            text-slate-300
-          ">
-            Leadership & Secretariat
-          </span>
+          <Award className="w-5 h-5 text-[#D4AF37]" />
+          <span className="text-sm uppercase tracking-[0.2em] text-[#E5E7EB]">Leadership & Secretariat</span>
         </motion.div>
 
         <motion.h1
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-          }}
-          className="
-            text-5xl
-            md:text-7xl
-            xl:text-8xl
-            font-black
-            tracking-[-0.05em]
-            leading-[0.95]
-            mb-8
-          "
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-5xl md:text-7xl xl:text-8xl font-black tracking-[-0.05em] leading-[0.95] mb-8"
         >
-          <span className="gradient-text">
-            The Foundation
-          </span>
+          <span className="gradient-text">The Secretariat</span>
         </motion.h1>
 
         <motion.div
-          initial={{
-            opacity: 0,
-            width: 0,
-          }}
-          animate={{
-            opacity: 1,
-            width: "120px",
-          }}
-          transition={{
-            duration: 1,
-            delay: 0.2,
-          }}
-          className="
-            h-[4px]
-            rounded-full
-            bg-gradient-to-r
-            from-violet-500
-            to-cyan-400
-            mx-auto
-            mb-8
-          "
+          initial={{ opacity: 0, width: 0 }}
+          animate={{ opacity: 1, width: "120px" }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="h-[4px] rounded-full bg-gradient-to-r from-[#D4AF37] to-[#E6C77A] mx-auto mb-8"
         />
 
         <motion.p
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-            delay: 0.3,
-          }}
-          className="
-            max-w-3xl
-            mx-auto
-            text-lg
-            md:text-2xl
-            text-slate-300
-            leading-relaxed
-          "
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="max-w-3xl mx-auto text-lg md:text-2xl text-[#E5E7EB] leading-relaxed"
         >
-          Meet the visionary leadership behind MUNSphere.
-          A collective of diplomats, strategists, and
-          academic innovators shaping the next generation
-          of global discourse.
+          Meet the leadership behind Enigma MUN — a collective of
+          diplomats, strategists, and academic innovators shaping the
+          next generation of global discourse.
         </motion.p>
       </div>
 
-      {/* =========================
-          FOUNDERS
-      ========================== */}
-      <div className="
-        relative
-        z-10
-        max-w-7xl
-        mx-auto
-        space-y-16
-      ">
-
-        {founders.map((founder, index) => (
-
+      <div className="relative z-10 max-w-4xl mx-auto space-y-8">
+        {secretariat.map((member, index) => (
           <motion.div
-            key={founder.id}
-            initial={{
-              opacity: 0,
-              y: 50,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: index * 0.15,
-            }}
-            className="
-              glass
-              hover-card
-              border
-              border-white/10
-              rounded-[32px]
-              overflow-hidden
-              relative
-              grid
-              grid-cols-1
-              lg:grid-cols-2
-              gap-10
-              p-8
-              lg:p-12
-              items-center
-            "
+            key={member.id}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, delay: index * 0.06, ease: "easeOut" }}
+            whileHover={{ y: -6 }}
+            className="group relative rounded-[2rem] overflow-hidden border border-[#D4AF37]/[0.12] bg-[#112240] hover:border-[#D4AF37]/40 transition-all duration-500 hover:shadow-[0_25px_70px_rgba(0,0,0,0.5)]"
           >
+            <div className="absolute -inset-px rounded-[2rem] bg-gradient-to-br from-[#D4AF37]/0 to-[#1E1B4B]/0 group-hover:from-[#D4AF37]/[0.04] group-hover:to-[#5B21B6]/[0.06] transition-all duration-500 pointer-events-none" />
 
-            {/* Glow Overlay */}
-            <div className="
-              absolute
-              inset-0
-              bg-gradient-to-br
-              from-violet-500/5
-              to-cyan-500/5
-              opacity-0
-              hover:opacity-100
-              transition-opacity
-              duration-700
-            " />
-
-            {/* IMAGE */}
-            <div className="
-              relative
-              z-10
-              flex
-              justify-center
-            ">
-              <div className="
-                relative
-                w-[320px]
-                h-[320px]
-                rounded-[32px]
-                overflow-hidden
-                border
-                border-white/10
-                shadow-2xl
-              ">
+            <div className="relative z-10 flex flex-col sm:flex-row gap-8 p-8">
+              <div className="relative w-full sm:w-44 h-56 sm:h-52 shrink-0 rounded-[1.5rem] overflow-hidden border border-[#D4AF37]/[0.12] mx-auto sm:mx-0">
                 <img
-                  src={founder.image}
-                  alt={founder.name}
-                  className="
-                    w-full
-                    h-full
-                    object-cover
-                    transition-transform
-                    duration-700
-                    hover:scale-105
-                  "
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              </div>
 
-                <div className="
-                  absolute
-                  inset-0
-                  bg-gradient-to-t
-                  from-black/40
-                  via-transparent
-                  to-transparent
-                " />
+              <div className="flex-1 min-w-0 text-center sm:text-left">
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-[#D4AF37] shrink-0" />
+                  <p className="text-[#D4AF37] uppercase tracking-[0.2em] text-xs font-semibold leading-relaxed">
+                    {member.shortTitle}
+                  </p>
+                </div>
+
+                <h3 className="text-3xl font-black text-[#F8F6F0] mb-2 tracking-tight">{member.name}</h3>
+
+                <p className="text-[#9CA3AF] text-sm mb-5 leading-relaxed">{member.title}</p>
+
+                <div className="flex gap-3 justify-center sm:justify-start">
+                  <Quote className="w-4 h-4 text-[#D4AF37]/60 shrink-0 mt-1 hidden sm:block" />
+                  <p className="text-[#E5E7EB] leading-relaxed">{member.bio}</p>
+                </div>
               </div>
             </div>
 
-            {/* CONTENT */}
-            <div className="
-              relative
-              z-10
-            ">
-
-              <div className="
-                inline-flex
-                items-center
-                gap-2
-                mb-5
-              ">
-                <div className="
-                  w-2
-                  h-2
-                  rounded-full
-                  bg-cyan-400
-                  pulse-glow
-                " />
-
-                <span className="
-                  text-sm
-                  uppercase
-                  tracking-[0.2em]
-                  text-slate-400
-                ">
-                  Secretariat Leadership
-                </span>
-              </div>
-
-              <h2 className="
-                text-4xl
-                font-black
-                mb-3
-              ">
-                {founder.name}
-              </h2>
-
-              <h3 className="
-                text-cyan-400
-                uppercase
-                tracking-[0.2em]
-                text-sm
-                font-semibold
-                mb-8
-              ">
-                {founder.title}
-              </h3>
-
-              <p className="
-                text-slate-300
-                leading-relaxed
-                text-lg
-                mb-10
-              ">
-                {founder.bio}
-              </p>
-
-              {/* Expertise */}
-              <div className="
-                flex
-                items-center
-                gap-3
-                mb-8
-                glass
-                border
-                border-white/10
-                rounded-2xl
-                px-5
-                py-4
-                w-fit
-              ">
-                <BookOpen className="
-                  w-5
-                  h-5
-                  text-violet-400
-                " />
-
-                <span className="
-                  text-slate-300
-                  text-sm
-                  uppercase
-                  tracking-[0.15em]
-                ">
-                  {founder.specialty}
-                </span>
-              </div>
-
-              {/* Actions */}
-              <div className="
-                flex
-                flex-wrap
-                items-center
-                gap-4
-              ">
-
+            {/* Contact Info - links transition to gold/purple on hover */}
+            <div className="relative z-10 px-8 pb-8">
+              <div className="pt-5 border-t border-[#D4AF37]/[0.12] flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start gap-4 sm:gap-6">
                 <a
-                  href={`mailto:${founder.contact}`}
-                  className="
-                    inline-flex
-                    items-center
-                    gap-3
-                    px-6
-                    py-3
-                    rounded-2xl
-                    bg-gradient-to-r
-                    from-violet-600
-                    to-cyan-500
-                    hover:scale-105
-                    transition-all
-                    duration-300
-                    font-semibold
-                    shadow-xl
-                  "
+                  href={`mailto:${member.email}`}
+                  className="inline-flex items-center gap-2 text-sm text-[#E5E7EB] hover:text-[#E6C77A] transition-colors duration-300"
                 >
-                  <Mail className="
-                    w-5
-                    h-5
-                  " />
-
-                  Contact
+                  <Mail className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  {member.email}
                 </a>
 
-                <a
-                  href="#"
-                  className="
-                    inline-flex
-                    items-center
-                    gap-3
-                    px-6
-                    py-3
-                    rounded-2xl
-                    glass
-                    border
-                    border-white/10
-                    hover:border-cyan-400/40
-                    hover:scale-105
-                    transition-all
-                    duration-300
-                    text-slate-300
-                  "
-                >
-                  <ExternalLink className="
-                    w-5
-                    h-5
-                  " />
+                <span className="hidden sm:block w-1 h-1 rounded-full bg-[#D4AF37]/[0.12]" />
 
-                  Profile
-                </a>
-
-                <a
-                  href="#"
-                  className="
-                    inline-flex
-                    items-center
-                    gap-3
-                    px-6
-                    py-3
-                    rounded-2xl
-                    glass
-                    border
-                    border-white/10
-                    hover:border-violet-400/40
-                    hover:scale-105
-                    transition-all
-                    duration-300
-                    text-slate-300
-                  "
-                >
-                  <Globe className="
-                    w-5
-                    h-5
-                  " />
-
-                  Global Work
-                </a>
+                <div className="inline-flex items-center gap-2 text-sm text-[#E5E7EB] hover:text-[#6D28D9] transition-colors duration-300">
+                  <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  {member.phone}
+                </div>
               </div>
             </div>
           </motion.div>

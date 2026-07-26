@@ -1,61 +1,41 @@
-/**
- * Events & Schedule Service
- * Handles API requests related to the conference itinerary, sessions, and timing.
- */
-
-import { API_ENDPOINTS, buildQueryString } from "@/lib/api";
+import { API_ENDPOINTS, buildQueryString, apiRequest } from "@/lib/api";
+import { getToken } from "@/services/authService";
 
 export const eventsService = {
-  /**
-   * Fetches all events, optionally filtered by provided parameters.
-   * @param {Object} filters - Optional filters (e.g., { type: 'committee', venue: 'Main Hall' })
-   */
   getAllEvents: async (filters = {}) => {
-    try {
-      const query = buildQueryString(filters);
-      const response = await fetch(`${API_ENDPOINTS.EVENTS.GET_ALL}${query}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || "Failed to fetch the conference schedule.");
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      throw error;
-    }
+    // Ensure we are referencing the static string property correctly
+    const endpoint = API_ENDPOINTS.EVENTS.GET_ALL;
+    const query = buildQueryString(filters);
+    return await apiRequest(`${endpoint}${query}`);
   },
 
-  /**
-   * Fetches events specifically scheduled for a given date.
-   * @param {string} date - The date string (e.g., 'YYYY-MM-DD')
-   */
-  getEventsByDate: async (date) => {
-    try {
-      const response = await fetch(API_ENDPOINTS.EVENTS.GET_BY_DATE(date), {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  getEventBySlug: async (slug) => {
+    // Ensure we are calling the function correctly
+    return await apiRequest(API_ENDPOINTS.EVENTS.GET_BY_SLUG(slug));
+  },
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || `Failed to fetch events for date: ${date}`);
-      }
+  createEvent: async (eventData) => {
+    return await apiRequest(API_ENDPOINTS.EVENTS.CREATE, {
+      method: "POST",
+      token: getToken(),
+      body: eventData,
+    });
+  },
 
-      return await response.json();
-    } catch (error) {
-      console.error(`Error fetching events for ${date}:`, error);
-      throw error;
-    }
-  }
+  updateEvent: async (eventId, eventData) => {
+    return await apiRequest(API_ENDPOINTS.EVENTS.UPDATE(eventId), {
+      method: "PUT",
+      token: getToken(),
+      body: eventData,
+    });
+  },
+
+  deleteEvent: async (eventId) => {
+    return await apiRequest(API_ENDPOINTS.EVENTS.DELETE(eventId), {
+      method: "DELETE",
+      token: getToken(),
+    });
+  },
 };
 
 export default eventsService;

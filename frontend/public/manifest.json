@@ -1,11 +1,11 @@
 {
-  "name": "MUNSphere Global Summit",
-  "short_name": "MUNSphere",
+  "name": "Enigma MUN Global Summit",
+  "short_name": "Enigma MUN",
   "description": "The premier Model United Nations platform for delegates, secretariat, and academic diplomacy.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F8F9FA",
-  "theme_color": "#1A2530",
+  "background_color": "#090909",
+  "theme_color": "#090909",
   "orientation": "portrait",
   "icons": [
     {

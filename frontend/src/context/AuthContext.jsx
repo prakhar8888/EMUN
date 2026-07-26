@@ -7,7 +7,14 @@ import {
   useState,
 } from "react";
 
-import axios from "axios";
+import {
+  loginUser,
+  signupUser,
+  getCurrentUser,
+  getToken,
+  setToken,
+  removeToken,
+} from "@/services/authService";
 
 const AuthContext = createContext();
 
@@ -27,17 +34,8 @@ export const AuthProvider = ({
 
 
   // ======================================
-  // API BASE URL
-  // ======================================
-
-  const API_URL =
-    "http://localhost:5000/api/v1/auth";
-
-
-  // ======================================
   // LOAD USER ON APP START
   // ======================================
-
   useEffect(() => {
 
     const loadUser = async () => {
@@ -45,7 +43,7 @@ export const AuthProvider = ({
       try {
 
         const token =
-          localStorage.getItem("token");
+          getToken();
 
         if (!token) {
           setLoading(false);
@@ -53,28 +51,22 @@ export const AuthProvider = ({
         }
 
         const response =
-          await axios.get(
-            `${API_URL}/me`,
-            {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
-            }
+          await getCurrentUser(
+            token
           );
 
-        setUser(response.data.user);
+        setUser(
+          response.user
+        );
 
       } catch (error) {
 
         console.error(
-          "Load User Error:",
-          error
+          "[AuthContext] Load User Error:",
+          error.message
         );
 
-        localStorage.removeItem(
-          "token"
-        );
+        removeToken();
 
         setUser(null);
 
@@ -92,7 +84,6 @@ export const AuthProvider = ({
   // ======================================
   // LOGIN
   // ======================================
-
   const login = async (
     email,
     password
@@ -101,38 +92,31 @@ export const AuthProvider = ({
     try {
 
       const response =
-        await axios.post(
-          `${API_URL}/login`,
-          {
-            email,
-            password,
-          }
-        );
+        await loginUser({
+          email,
+          password,
+        });
 
       const {
         token,
         user,
-      } = response.data;
+      } = response;
 
-      localStorage.setItem(
-        "token",
-        token
-      );
+      setToken(token);
 
       setUser(user);
 
       return {
         success: true,
+        user,
       };
 
     } catch (error) {
 
       return {
         success: false,
-
         message:
-          error.response?.data
-            ?.message ||
+          error.message ||
           "Login failed",
       };
     }
@@ -142,7 +126,6 @@ export const AuthProvider = ({
   // ======================================
   // SIGNUP
   // ======================================
-
   const signup = async (
     formData
   ) => {
@@ -150,35 +133,30 @@ export const AuthProvider = ({
     try {
 
       const response =
-        await axios.post(
-          `${API_URL}/signup`,
+        await signupUser(
           formData
         );
 
       const {
         token,
         user,
-      } = response.data;
+      } = response;
 
-      localStorage.setItem(
-        "token",
-        token
-      );
+      setToken(token);
 
       setUser(user);
 
       return {
         success: true,
+        user,
       };
 
     } catch (error) {
 
       return {
         success: false,
-
         message:
-          error.response?.data
-            ?.message ||
+          error.message ||
           "Signup failed",
       };
     }
@@ -188,34 +166,53 @@ export const AuthProvider = ({
   // ======================================
   // LOGOUT
   // ======================================
-
   const logout = () => {
 
-    localStorage.removeItem(
-      "token"
-    );
+    removeToken();
 
     setUser(null);
   };
 
 
+  // ======================================
+  // ROLE HELPERS
+  // ======================================
+  const isAdmin =
+    user?.role === "ADMIN";
+
+  const isSecretariat =
+    user?.role === "SECRETARIAT";
+
+  const isDelegate =
+    user?.role === "DELEGATE";
+
+
   return (
+
     <AuthContext.Provider
       value={{
+
         user,
         setUser,
+
+        loading,
 
         login,
         signup,
         logout,
 
-        loading,
-
         isAuthenticated:
           !!user,
+
+        isAdmin,
+        isSecretariat,
+        isDelegate,
+
       }}
     >
+
       {children}
+
     </AuthContext.Provider>
   );
 };
@@ -224,6 +221,5 @@ export const AuthProvider = ({
 // ======================================
 // USE AUTH
 // ======================================
-
 export const useAuth = () =>
   useContext(AuthContext);

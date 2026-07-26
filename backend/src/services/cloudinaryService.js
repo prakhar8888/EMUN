@@ -1,11 +1,12 @@
 import cloudinary from "../config/cloudinary.js";
+import { CLOUDINARY_FOLDERS } from "../utils/constants.js";
 
 // ======================================
 // UPLOAD FILE TO CLOUDINARY
 // ======================================
 export const uploadToCloudinary = async (
   filePath,
-  folder = "munsphere"
+  folder = CLOUDINARY_FOLDERS.GENERAL_UPLOADS
 ) => {
   try {
     const result = await cloudinary.uploader.upload(

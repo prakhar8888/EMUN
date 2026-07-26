@@ -1,9 +1,10 @@
 /**
  * Feedback Service
- * Handles API requests for submitting and retrieving delegate feedback.
+ * Handles API requests for submitting, retrieving, updating, and deleting delegate feedback.
  */
 
 import { API_ENDPOINTS } from "@/lib/api";
+import { getToken } from "./authService";
 
 export const feedbackService = {
   /**
@@ -37,11 +38,11 @@ export const feedbackService = {
    */
   getAllFeedback: async () => {
     try {
-      // In a fully authenticated app, you would attach your JWT token in these headers
       const response = await fetch(API_ENDPOINTS.FEEDBACK.GET_ALL, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
         },
       });
 
@@ -55,7 +56,62 @@ export const feedbackService = {
       console.error("Error fetching feedback:", error);
       throw error;
     }
-  }
+  },
+
+  /**
+   * Updates the status of a feedback entry, e.g. marking it as REVIEWED.
+   * (Restricted to Admin / Secretariat)
+   * @param {string|number} id - The feedback entry's ID.
+   * @param {string} status - The new status (e.g. "REVIEWED", "PENDING").
+   */
+  updateFeedbackStatus: async (id, status) => {
+    try {
+      const response = await fetch(API_ENDPOINTS.FEEDBACK.UPDATE_STATUS(id), {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || "Failed to update feedback status.");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error updating feedback status:", error);
+      throw error;
+    }
+  },
+
+  /**
+   * Deletes a feedback entry. (Restricted to Admin / Secretariat)
+   * @param {string|number} id - The feedback entry's ID.
+   */
+  deleteFeedback: async (id) => {
+    try {
+      const response = await fetch(API_ENDPOINTS.FEEDBACK.DELETE(id), {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || "Failed to delete feedback.");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error deleting feedback:", error);
+      throw error;
+    }
+  },
 };
 
 export default feedbackService;

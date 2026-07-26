@@ -1,376 +1,180 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-
-import {
-  CalendarDays,
-  Clock3,
-  MapPin,
-  ChevronRight,
-  Sparkles,
-} from "lucide-react";
+import { CalendarDays, MapPin, Loader2, AlertCircle, ArrowRight, Sparkles } from "lucide-react";
+import eventsService from "@/services/eventsService";
+import AnimatedBackground from "@/components/common/AnimatedBackground";
 
 export default function EventsPage() {
-  const events = [
-    {
-      id: 1,
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-      title: "Opening Ceremony",
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await eventsService.getAllEvents();
+      const list = response?.data || [];
+      setEvents(list.filter((ev) => ev.isPublished !== false));
+    } catch (err) {
+      console.error("Fetch Events Error:", err);
+      setError(err.message || "Failed to load events. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      date: "12 June 2026",
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
-      time: "09:00 AM",
+  const formatDate = (date) => {
+    if (!date) return "TBA";
+    return new Date(date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+  };
 
-      location: "Grand Assembly Hall",
-
-      description:
-        "The official inauguration of MUNSphere Global Summit featuring keynote speakers, diplomatic welcomes, and delegate introductions.",
-
-      highlight: "Global Inauguration",
-    },
-
-    {
-      id: 2,
-
-      title: "Diplomatic Debate Session",
-
-      date: "13 June 2026",
-
-      time: "11:30 AM",
-
-      location: "Security Council Chamber",
-
-      description:
-        "Delegates engage in high-level geopolitical discussions, negotiations, and committee simulations.",
-
-      highlight: "Committee Simulation",
-    },
-
-    {
-      id: 3,
-
-      title: "International Crisis Committee",
-
-      date: "13 June 2026",
-
-      time: "04:00 PM",
-
-      location: "Crisis Operations Center",
-
-      description:
-        "Real-time crisis simulations testing diplomacy, strategic thinking, and international cooperation under pressure.",
-
-      highlight: "Live Crisis Simulation",
-    },
-
-    {
-      id: 4,
-
-      title: "Networking & Cultural Evening",
-
-      date: "14 June 2026",
-
-      time: "07:00 PM",
-
-      location: "Diplomatic Lounge",
-
-      description:
-        "Delegates connect, collaborate, and engage in intercultural networking experiences and social diplomacy.",
-
-      highlight: "Global Networking",
-    },
-
-    {
-      id: 5,
-
-      title: "Closing Ceremony",
-
-      date: "15 June 2026",
-
-      time: "05:00 PM",
-
-      location: "Main Summit Auditorium",
-
-      description:
-        "Awards, recognitions, closing statements, and celebration of leadership, diplomacy, and collaboration.",
-
-      highlight: "Awards & Recognition",
-    },
-  ];
+  const isUpcoming = (startDate) => {
+    if (!startDate) return false;
+    return new Date(startDate) > new Date();
+  };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden min-h-screen">
+      <section className="relative pt-32 pb-20 px-6 text-center">
+        <AnimatedBackground />
 
-      {/* =========================
-          HERO SECTION
-      ========================== */}
-      <section className="relative pt-32 pb-24 px-6">
-
-        {/* Background Effects */}
-        <div className="absolute inset-0 z-0">
-
-          <div className="blur-circle blur-purple w-[350px] h-[350px] top-0 left-0" />
-
-          <div className="blur-circle blur-cyan w-[300px] h-[300px] bottom-0 right-0" />
-        </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto text-center">
-
+        <div className="relative z-10 max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
+            initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="
-              inline-flex
-              items-center
-              gap-3
-              glass
-              px-6
-              py-3
-              rounded-full
-              mb-8
-            "
+            className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8"
           >
-            <Sparkles className="w-5 h-5 text-violet-400" />
-
-            <span className="text-sm text-slate-300 tracking-wide">
-              Summit Schedule • Sessions • Diplomatic Experiences
-            </span>
+            <CalendarDays className="w-5 h-5 text-[#D4AF37]" />
+            <span className="text-sm uppercase tracking-[0.2em] text-[#E5E7EB]">Conference Schedule</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="
-              text-5xl
-              md:text-7xl
-              font-black
-              leading-tight
-              mb-8
-            "
+            className="text-5xl md:text-7xl font-black tracking-[-0.05em] leading-[0.95] mb-8"
           >
-            Summit{" "}
-
-            <span className="gradient-text">
-              Events
-            </span>
+            Upcoming <span className="gradient-text">Events</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1 }}
-            className="
-              text-lg
-              md:text-2xl
-              text-slate-300
-              max-w-3xl
-              mx-auto
-              leading-relaxed
-            "
+            className="text-lg md:text-2xl text-[#E5E7EB] max-w-2xl mx-auto leading-relaxed"
           >
-            Explore immersive committee sessions, global networking
-            experiences, diplomatic simulations, and high-level
-            summit activities across the conference timeline.
+            Explore Enigma MUN's official conferences and diplomatic summits.
+            Select an event below to view full details, dates, and venue information.
           </motion.p>
         </div>
       </section>
 
-      {/* =========================
-          EVENTS TIMELINE
-      ========================== */}
-      <section className="section-padding px-6">
+      <section className="relative z-10 max-w-6xl mx-auto px-6 pb-32">
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-24 gap-4">
+            <Loader2 className="w-10 h-10 animate-spin text-[#D4AF37]" />
+            <p className="text-[#E5E7EB]">Loading events...</p>
+          </div>
+        )}
 
-        <div className="container-custom">
+        {!loading && error && (
+          <div className="glass rounded-3xl p-10 text-center max-w-xl mx-auto">
+            <AlertCircle className="w-10 h-10 text-[#991B1B] mx-auto mb-4" />
+            <p className="text-[#D97B7B] mb-6">{error}</p>
+            <button onClick={fetchEvents} className="px-6 py-3 rounded-xl btn-gradient font-semibold">Retry</button>
+          </div>
+        )}
 
-          <div className="relative">
+        {!loading && !error && events.length === 0 && (
+          <div className="glass rounded-3xl p-12 text-center max-w-xl mx-auto">
+            <CalendarDays className="w-14 h-14 text-[#9CA3AF] mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-[#F8F6F0] mb-2">No Events Scheduled Yet</h3>
+            <p className="text-[#9CA3AF]">Check back soon for upcoming MUN conferences and summits.</p>
+          </div>
+        )}
 
-            {/* Vertical Timeline Line */}
-            <div className="
-              absolute
-              left-1/2
-              top-0
-              bottom-0
-              hidden
-              lg:block
-              w-[2px]
-              bg-gradient-to-b
-              from-violet-500
-              via-cyan-500
-              to-transparent
-              opacity-30
-              -translate-x-1/2
-            " />
-
-            <div className="space-y-14">
-
-              {events.map((event, index) => (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.7,
-                    delay: index * 0.12,
-                  }}
-                  className={`
-                    relative
-                    flex
-                    flex-col
-                    lg:flex-row
-                    items-center
-                    gap-8
-                    ${
-                      index % 2 === 0
-                        ? "lg:flex-row"
-                        : "lg:flex-row-reverse"
-                    }
-                  `}
+        {!loading && !error && events.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {events.map((event, index) => (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                whileHover={{ y: -8 }}
+                className="group relative h-full"
+              >
+                <Link
+                  href={`/events/${event.slug}`}
+                  className="flex flex-col h-full rounded-[2rem] overflow-hidden border border-[#D4AF37]/[0.12] bg-[#112240] hover:border-[#D4AF37]/40 transition-all duration-500 hover:shadow-[0_25px_70px_rgba(0,0,0,0.5)]"
                 >
+                  <div className="absolute -inset-px rounded-[2rem] bg-gradient-to-br from-[#D4AF37]/0 to-[#1E1B4B]/0 group-hover:from-[#D4AF37]/[0.05] group-hover:to-[#5B21B6]/[0.06] transition-all duration-500 pointer-events-none z-10" />
 
-                  {/* Timeline Dot */}
-                  <div className="
-                    hidden
-                    lg:flex
-                    absolute
-                    left-1/2
-                    top-1/2
-                    -translate-x-1/2
-                    -translate-y-1/2
-                    w-6
-                    h-6
-                    rounded-full
-                    bg-gradient-to-r
-                    from-violet-500
-                    to-cyan-500
-                    shadow-[0_0_30px_rgba(124,58,237,0.7)]
-                    z-20
-                  " />
+                  <div className="relative h-52 overflow-hidden shrink-0">
+                    <img
+                      src={event.bannerUrl || "https://images.unsplash.com/photo-1529156069898-49953e39b3ac"}
+                      alt={event.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F] via-black/10 to-transparent" />
 
-                  {/* Card */}
-                  <div className="lg:w-1/2">
-
-                    <motion.div
-                      whileHover={{ y: -10 }}
-                      className="
-                        glass
-                        hover-card
-                        rounded-[2rem]
-                        p-8
-                        border
-                        border-white/10
-                        relative
-                        overflow-hidden
-                        group
-                      "
-                    >
-
-                      {/* Hover Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition duration-500" />
-
-                      <div className="relative z-10">
-
-                        {/* Highlight Badge */}
-                        <div className="
-                          inline-flex
-                          items-center
-                          gap-2
-                          px-4
-                          py-2
-                          rounded-full
-                          bg-white/5
-                          border
-                          border-white/10
-                          text-sm
-                          text-cyan-400
-                          mb-6
-                        ">
-                          <Sparkles className="w-4 h-4" />
-
-                          {event.highlight}
-                        </div>
-
-                        {/* Title */}
-                        <h2 className="
-                          text-3xl
-                          font-bold
-                          mb-6
-                          leading-tight
-                        ">
-                          {event.title}
-                        </h2>
-
-                        {/* Meta Info */}
-                        <div className="
-                          flex
-                          flex-wrap
-                          gap-5
-                          text-sm
-                          text-slate-300
-                          mb-6
-                        ">
-
-                          <div className="flex items-center gap-2">
-                            <CalendarDays className="w-4 h-4 text-violet-400" />
-                            {event.date}
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <Clock3 className="w-4 h-4 text-cyan-400" />
-                            {event.time}
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-pink-400" />
-                            {event.location}
-                          </div>
-                        </div>
-
-                        {/* Description */}
-                        <p className="
-                          text-slate-300
-                          leading-relaxed
-                          mb-8
-                        ">
-                          {event.description}
-                        </p>
-
-                        {/* Button */}
-                        <button
-                          className="
-                            flex
-                            items-center
-                            gap-3
-                            px-6
-                            py-4
-                            rounded-2xl
-                            bg-gradient-to-r
-                            from-violet-600
-                            to-cyan-500
-                            hover:scale-105
-                            transition-all
-                            duration-300
-                            font-semibold
-                            shadow-xl
-                          "
-                        >
-                          Learn More
-
-                          <ChevronRight className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </motion.div>
+                    {isUpcoming(event.startDate) && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3 + index * 0.1 }}
+                        className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0A192F]/70 backdrop-blur-md border border-[#D4AF37]/30"
+                      >
+                        <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37]">Upcoming</span>
+                      </motion.div>
+                    )}
                   </div>
 
-                  {/* Spacer */}
-                  <div className="hidden lg:block lg:w-1/2" />
-                </motion.div>
-              ))}
-            </div>
+                  <div className="relative z-10 p-8 flex flex-col flex-1">
+                    {event.highlight && (
+                      <span className="inline-block text-xs font-semibold uppercase tracking-wide text-[#D4AF37] mb-3 w-fit">
+                        {event.highlight}
+                      </span>
+                    )}
+
+                    <h2 className="text-2xl font-bold text-[#F8F6F0] mb-3 group-hover:text-[#E6C77A] transition-colors">
+                      {event.title}
+                    </h2>
+
+                    <p className="text-[#E5E7EB] text-sm leading-relaxed mb-6 line-clamp-2">{event.description}</p>
+
+                    <div className="space-y-2 text-sm text-[#9CA3AF] mt-auto">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                        <span>{event.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CalendarDays className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                        <span>{formatDate(event.startDate)} - {formatDate(event.endDate)}</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 inline-flex items-center gap-2 text-[#E6C77A] font-semibold text-sm">
+                      View Details
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        )}
       </section>
     </div>
   );
