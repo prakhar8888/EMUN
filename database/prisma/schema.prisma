@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../../backend/node_modules/@prisma/client"
+  output   = "../../backend/node_modules/.prisma/client"
 }
 
 datasource db {
@@ -43,13 +43,13 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  staffStatus  StaffStatus @default(ACTIVE)
-  designation  String?
+  staffStatus String?     @default("ACTIVE")
+  designation String?
 
   canManageEvents        Boolean @default(false)
   canManageRegistrations Boolean @default(false)
   canManageCommittees    Boolean @default(false)
-  canManageFeedback      Boolean @default(false)
+  canManageFeedback       Boolean @default(false)
   canManageContact       Boolean @default(false)
   canCreateStaff         Boolean @default(false)
 
@@ -105,21 +105,21 @@ model Event {
 }
 
 model Chamber {
-  id                 Int      @id @default(autoincrement())
-  name               String
-  slug               String   @unique
-  agenda             String
-  description        String
+  id                  Int      @id @default(autoincrement())
+  name                String
+  slug                String   @unique
+  agenda              String
+  description         String
 
-  iconUrl            String?
+  iconUrl             String?
   backgroundGuideUrl String?
 
   isPublished        Boolean  @default(true)
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
-  registrations      Registration[]
+  registrations       Registration[]
 
   @@index([slug])
 }
