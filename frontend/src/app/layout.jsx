@@ -21,7 +21,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="relative bg-[#0A192F] text-[#E5E7EB] overflow-x-hidden antialiased">
+      {/*
+        Removed the hardcoded Tailwind classes here so the mobile-optimized
+        body styling and animated backgrounds from globals.css apply flawlessly.
+      */}
+      <body>
         <AuthProvider>
           <ConditionalChrome>{children}</ConditionalChrome>
         </AuthProvider>

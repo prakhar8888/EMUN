@@ -17,8 +17,7 @@ import {
 import AnimatedBackground from "@/components/common/AnimatedBackground";
 
 // ======================================
-// SHARED MOTION VARIANTS — one consistent
-// choreography language across every section
+// SHARED MOTION VARIANTS
 // ======================================
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -80,23 +79,24 @@ export default function HomePage() {
       {/* ======================================
           HERO — cinematic centerpiece
       ====================================== */}
-      <section className="relative min-h-screen flex items-center pt-32 pb-24 px-6">
+      <section className="relative min-h-screen flex items-center pt-24 pb-16 sm:pt-32 sm:pb-24 px-4 sm:px-6">
         <AnimatedBackground />
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center">
+        <div className="relative z-10 max-w-5xl mx-auto text-center w-full">
           <motion.div
             initial={{ opacity: 0, y: -16, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-10"
+            className="inline-flex items-center gap-2 sm:gap-3 glass px-4 py-2 sm:px-6 sm:py-3 rounded-full mb-8 sm:mb-10 max-w-[95%] sm:max-w-none"
           >
             <motion.span
               animate={{ rotate: [0, 15, 0, -15, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              className="shrink-0"
             >
-              <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" />
             </motion.span>
-            <span className="text-xs md:text-sm text-[#E5E7EB] tracking-[0.2em] uppercase">
+            <span className="text-[10px] sm:text-xs md:text-sm text-[#E5E7EB] tracking-[0.15em] sm:tracking-[0.2em] uppercase truncate sm:whitespace-normal">
               An International Model United Nations Society
             </span>
           </motion.div>
@@ -106,14 +106,14 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl md:text-8xl xl:text-9xl font-black tracking-[-0.05em] leading-[0.9]"
+              className="text-5xl sm:text-6xl md:text-8xl xl:text-9xl font-black tracking-[-0.05em] leading-[1.05] sm:leading-[0.9]"
             >
               Every Crisis Is a{" "}
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.55 }}
-                className="gradient-text block md:inline"
+                className="gradient-text block sm:inline mt-2 sm:mt-0"
               >
                 Puzzle Worth Solving
               </motion.span>
@@ -124,7 +124,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-2xl text-[#E5E7EB] max-w-2xl mx-auto leading-relaxed mb-14 font-light mt-10"
+            className="text-base sm:text-lg md:text-2xl text-[#E5E7EB] max-w-2xl mx-auto leading-relaxed mb-10 sm:mb-14 font-light mt-6 sm:mt-10 px-2 sm:px-0"
           >
             Enigma MUN is where the world's sharpest young minds gather to
             decode humanity's hardest questions — through diplomacy, debate,
@@ -135,10 +135,10 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75, duration: 0.7 }}
-            className="flex flex-wrap items-center justify-center gap-5"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 w-full max-w-xs sm:max-w-none mx-auto"
           >
-            <motion.div whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}>
-              <Link href="/register" className="inline-flex items-center gap-2 btn-gradient shimmer-sweep px-9 py-4 rounded-2xl font-semibold text-lg glow">
+            <motion.div className="w-full sm:w-auto" whileHover={{ scale: 1.04, y: -3 }} whileTap={{ scale: 0.97 }}>
+              <Link href="/register" className="flex items-center justify-center gap-2 btn-gradient shimmer-sweep w-full sm:w-auto px-6 py-4 sm:px-9 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg glow">
                 Register Now
                 <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}>
                   <ChevronRight className="w-5 h-5" />
@@ -150,7 +150,7 @@ export default function HomePage() {
               whileHover={{ scale: 1.04, y: -3 }}
               whileTap={{ scale: 0.97 }}
               onClick={scrollToStory}
-              className="inline-flex items-center gap-2 glass border border-[#D4AF37]/[0.12] px-9 py-4 rounded-2xl font-semibold text-lg hover:border-[#D4AF37]/40 transition-colors duration-300"
+              className="flex items-center justify-center gap-2 glass border border-[#D4AF37]/[0.12] w-full sm:w-auto px-6 py-4 sm:px-9 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg hover:border-[#D4AF37]/40 transition-colors duration-300"
             >
               Discover Enigma
               <motion.span animate={{ y: [0, 4, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}>
@@ -165,12 +165,12 @@ export default function HomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 1 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-6 h-10 rounded-full border border-[#D4AF37]/30 flex items-start justify-center p-1.5"
+            className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border border-[#D4AF37]/30 flex items-start justify-center p-1 sm:p-1.5"
           >
             <motion.div
               animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
@@ -184,32 +184,32 @@ export default function HomePage() {
       {/* ======================================
           WHY "ENIGMA"
       ====================================== */}
-      <section id="enigma-story" className="relative section-padding px-6">
+      <section id="enigma-story" className="relative section-padding px-4 sm:px-6">
         <div className="container-custom">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
             className="max-w-3xl mx-auto text-center"
           >
-            <motion.p variants={fadeUpSmall} className="text-[#D4AF37] uppercase tracking-[0.25em] text-sm mb-6">
+            <motion.p variants={fadeUpSmall} className="text-[#D4AF37] uppercase tracking-[0.25em] text-xs sm:text-sm mb-4 sm:mb-6">
               Why "Enigma"
             </motion.p>
 
-            <motion.h2 variants={fadeUp} className="section-title mb-10">
+            <motion.h2 variants={fadeUp} className="section-title mb-8 sm:mb-10 text-3xl sm:text-4xl md:text-5xl">
               A Name Built on <span className="gradient-text">Complexity, Solved</span>
             </motion.h2>
 
-            <div className="space-y-6 text-left">
-              <motion.p variants={fadeUp} className="text-[#E5E7EB] text-lg md:text-xl leading-relaxed">
+            <div className="space-y-4 sm:space-y-6 text-left">
+              <motion.p variants={fadeUp} className="text-[#E5E7EB] text-base sm:text-lg md:text-xl leading-relaxed">
                 An enigma is not a problem without an answer — it is a
                 problem whose answer has not yet been found. That single
                 distinction shapes everything we build. The world's hardest
                 challenges — conflict, inequality, climate, governance —
                 are not unsolvable. They are unsolved.
               </motion.p>
-              <motion.p variants={fadeUp} className="text-[#E5E7EB] text-lg md:text-xl leading-relaxed">
+              <motion.p variants={fadeUp} className="text-[#E5E7EB] text-base sm:text-lg md:text-xl leading-relaxed">
                 We named this platform after the idea that every layer of
                 complexity conceals a path forward, if someone is patient
                 and rigorous enough to find it. Enigma MUN exists to train
@@ -225,34 +225,34 @@ export default function HomePage() {
       {/* ======================================
           THE ENIGMA EXPERIENCE — parallax timeline
       ====================================== */}
-      <section className="relative section-padding px-6">
+      <section className="relative section-padding px-4 sm:px-6">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5"
+              className="lg:col-span-5 text-center lg:text-left"
             >
-              <p className="text-[#D4AF37] uppercase tracking-[0.25em] text-sm mb-6">The Journey</p>
-              <h2 className="section-title mb-6">The Enigma <span className="gradient-text">Experience</span></h2>
+              <p className="text-[#D4AF37] uppercase tracking-[0.25em] text-xs sm:text-sm mb-4 sm:mb-6">The Journey</p>
+              <h2 className="section-title mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl">The Enigma <span className="gradient-text">Experience</span></h2>
               <motion.div
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="w-20 h-1 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#E6C77A] divider-draw"
+                className="w-16 sm:w-20 h-1 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#E6C77A] divider-draw mx-auto lg:mx-0"
               />
             </motion.div>
 
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
+              viewport={{ once: true, margin: "-50px" }}
               variants={staggerContainer}
-              className="lg:col-span-7 space-y-10"
+              className="lg:col-span-7 space-y-8 sm:space-y-10"
             >
               {[
                 { num: "01", title: "Preparation", text: "Every delegate begins in research — studying a nation's history, alliances, and interests until they can argue its position as their own." },
@@ -264,16 +264,16 @@ export default function HomePage() {
                   variants={fadeUp}
                   whileHover={{ x: 6 }}
                   transition={{ duration: 0.3 }}
-                  className="flex gap-6 group"
+                  className="flex flex-col sm:flex-row gap-3 sm:gap-6 group text-center sm:text-left"
                 >
                   <motion.div
-                    className="text-4xl font-black text-white/10 shrink-0 group-hover:text-[#D4AF37]/20 transition-colors duration-500"
+                    className="text-4xl sm:text-4xl font-black text-white/10 shrink-0 group-hover:text-[#D4AF37]/20 transition-colors duration-500"
                   >
                     {step.num}
                   </motion.div>
                   <div>
                     <h3 className="text-xl font-bold mb-2 text-[#F8F6F0]">{step.title}</h3>
-                    <p className="text-[#E5E7EB] leading-relaxed">{step.text}</p>
+                    <p className="text-sm sm:text-base text-[#E5E7EB] leading-relaxed">{step.text}</p>
                   </div>
                 </motion.div>
               ))}
@@ -285,25 +285,25 @@ export default function HomePage() {
       {/* ======================================
           CORE VALUES — staggered card grid
       ====================================== */}
-      <section className="relative section-padding px-6">
+      <section className="relative section-padding px-4 sm:px-6">
         <div className="container-custom">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-16"
           >
-            <motion.p variants={fadeUpSmall} className="text-[#D4AF37] uppercase tracking-[0.25em] text-sm mb-6">What We Stand For</motion.p>
-            <motion.h2 variants={fadeUp} className="section-title">Core Values</motion.h2>
+            <motion.p variants={fadeUpSmall} className="text-[#D4AF37] uppercase tracking-[0.25em] text-xs sm:text-sm mb-4 sm:mb-6">What We Stand For</motion.p>
+            <motion.h2 variants={fadeUp} className="section-title text-3xl sm:text-4xl md:text-5xl">Core Values</motion.h2>
           </motion.div>
 
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-8"
           >
             {values.map((value) => {
               const Icon = value.icon;
@@ -312,16 +312,16 @@ export default function HomePage() {
                   key={value.title}
                   variants={scaleIn}
                   whileHover={{ y: -10 }}
-                  className="glass card-elevate rounded-[2rem] p-8 relative overflow-hidden group"
+                  className="glass card-elevate rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-[#5B21B6]/0 to-[#1E1B4B]/0 group-hover:from-[#5B21B6]/[0.06] group-hover:to-[#1E1B4B]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   <div className="relative z-10">
-                    <div className="w-14 h-14 rounded-2xl bg-[#112240] border border-[#D4AF37]/[0.15] flex items-center justify-center mb-6">
-                      <Icon className="w-7 h-7 text-[#D4AF37] icon-live" />
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#112240] border border-[#D4AF37]/[0.15] flex items-center justify-center mb-4 sm:mb-6">
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-[#D4AF37] icon-live" />
                     </div>
 
-                    <h3 className="text-xl font-bold mb-3 text-[#F8F6F0]">{value.title}</h3>
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-[#F8F6F0]">{value.title}</h3>
                     <p className="text-[#9CA3AF] text-sm leading-relaxed">{value.description}</p>
                   </div>
                 </motion.div>
@@ -334,38 +334,38 @@ export default function HomePage() {
       {/* ======================================
           LEADERS' WISDOM
       ====================================== */}
-      <section className="relative section-padding px-6">
+      <section className="relative section-padding px-4 sm:px-6">
         <div className="container-custom">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-16"
           >
-            <motion.p variants={fadeUpSmall} className="text-[#D4AF37] uppercase tracking-[0.25em] text-sm mb-6">Words That Guide Us</motion.p>
-            <motion.h2 variants={fadeUp} className="section-title">Leaders' Wisdom</motion.h2>
+            <motion.p variants={fadeUpSmall} className="text-[#D4AF37] uppercase tracking-[0.25em] text-xs sm:text-sm mb-4 sm:mb-6">Words That Guide Us</motion.p>
+            <motion.h2 variants={fadeUp} className="section-title text-3xl sm:text-4xl md:text-5xl">Leaders' Wisdom</motion.h2>
           </motion.div>
 
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8"
           >
             {quotes.map((quote) => (
               <motion.div
                 key={quote.author}
                 variants={fadeUp}
                 whileHover={{ y: -6 }}
-                className="glass card-elevate rounded-[2rem] p-8 relative flex flex-col h-full"
+                className="glass card-elevate rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 relative flex flex-col h-full"
               >
-                <Quote className="w-8 h-8 text-[#D4AF37]/50 mb-6 icon-live" />
-                <p className="text-[#E5E7EB] text-lg leading-relaxed mb-8 flex-1 italic">"{quote.text}"</p>
-                <div className="pt-6 border-t border-[#D4AF37]/[0.12]">
-                  <p className="font-semibold text-[#F8F6F0]">{quote.author}</p>
-                  <p className="text-sm text-[#9CA3AF]">{quote.role}</p>
+                <Quote className="w-7 h-7 sm:w-8 sm:h-8 text-[#D4AF37]/50 mb-4 sm:mb-6 icon-live" />
+                <p className="text-[#E5E7EB] text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 flex-1 italic">"{quote.text}"</p>
+                <div className="pt-4 sm:pt-6 border-t border-[#D4AF37]/[0.12]">
+                  <p className="font-semibold text-[#F8F6F0] text-sm sm:text-base">{quote.author}</p>
+                  <p className="text-xs sm:text-sm text-[#9CA3AF]">{quote.role}</p>
                 </div>
               </motion.div>
             ))}
@@ -376,14 +376,14 @@ export default function HomePage() {
       {/* ======================================
           VISION FOR THE FUTURE
       ====================================== */}
-      <section className="relative section-padding px-6">
+      <section className="relative section-padding px-4 sm:px-6">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="glass rounded-[2.5rem] p-10 md:p-20 relative overflow-hidden text-center"
+            className="glass rounded-[1.5rem] sm:rounded-[2.5rem] p-6 sm:p-10 md:p-20 relative overflow-hidden text-center"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#1E1B4B]/30 via-transparent to-[#D4AF37]/[0.03]" />
 
@@ -393,7 +393,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1, duration: 0.6 }}
-                className="text-[#D4AF37] uppercase tracking-[0.25em] text-sm mb-6"
+                className="text-[#D4AF37] uppercase tracking-[0.25em] text-xs sm:text-sm mb-4 sm:mb-6"
               >
                 Looking Ahead
               </motion.p>
@@ -403,7 +403,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2, duration: 0.7 }}
-                className="section-title mb-8"
+                className="section-title mb-6 sm:mb-8 text-3xl sm:text-4xl md:text-5xl"
               >
                 A Vision for the <span className="gradient-text">Future</span>
               </motion.h2>
@@ -413,7 +413,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.35, duration: 0.7 }}
-                className="text-[#E5E7EB] text-lg md:text-xl leading-relaxed"
+                className="text-[#E5E7EB] text-base sm:text-lg md:text-xl leading-relaxed"
               >
                 We envision an Enigma delegate network that spans continents
                 — a community of alumni carrying the habits of careful
@@ -430,15 +430,15 @@ export default function HomePage() {
       {/* ======================================
           FINAL CTA
       ====================================== */}
-      <section className="relative pb-32 px-6">
+      <section className="relative pb-24 sm:pb-32 px-4 sm:px-6">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ scale: 1.005 }}
-            className="relative rounded-[2.5rem] p-12 md:p-24 text-center overflow-hidden bg-gradient-to-br from-[#1E1B4B]/50 via-[#0A192F] to-[#5B21B6]/20 border border-[#D4AF37]/[0.12]"
+            className="relative rounded-[1.5rem] sm:rounded-[2.5rem] p-8 sm:p-12 md:p-24 text-center overflow-hidden bg-gradient-to-br from-[#1E1B4B]/50 via-[#0A192F] to-[#5B21B6]/20 border border-[#D4AF37]/[0.12]"
           >
             <div className="relative z-10">
               <motion.h2
@@ -446,7 +446,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
-                className="text-4xl md:text-6xl font-black tracking-[-0.04em] mb-8"
+                className="text-3xl sm:text-4xl md:text-6xl font-black tracking-[-0.04em] mb-6 sm:mb-8"
               >
                 Begin Your <span className="gradient-text">Enigma Journey</span>
               </motion.h2>
@@ -456,7 +456,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-[#E5E7EB] text-lg max-w-2xl mx-auto mb-12 leading-relaxed"
+                className="text-[#E5E7EB] text-base sm:text-lg max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed"
               >
                 Take your seat at the table where tomorrow's answers are being written.
               </motion.p>
@@ -465,13 +465,14 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                whileHover={{ scale: 1.05, y: -3 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-block"
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="w-full sm:w-auto flex justify-center"
               >
-                <Link href="/register" className="inline-flex items-center gap-2 btn-gradient shimmer-sweep px-10 py-5 rounded-2xl font-semibold text-lg glow">
-                  Register Now
+                <Link
+                  href="/register"
+                  className="inline-flex items-center justify-center gap-2 btn-gradient shimmer-sweep px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-semibold text-lg glow w-full sm:w-auto"
+                >
+                  Apply as a Delegate
                   <ChevronRight className="w-5 h-5" />
                 </Link>
               </motion.div>
